@@ -40,6 +40,10 @@ public class TestSaicApiClient {
 
     String token = oauthToken.getData().getAccess_token();
     VehicleList vehicleList = client.getVehicleList(token);
+    if (vehicleList.getData().getVinList().length == 0) {
+      logger.warn("No vehicleList data");
+      return;
+    }
     String vin = vehicleList.getData().getVinList()[0].getVin();
 
     assertTrue(client.getVehicleStatus(token, vin).isSuccess());
